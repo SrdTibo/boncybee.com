@@ -69,13 +69,41 @@
                     display: none;
                 }
             }
+            @keyframes dots {
+                0%, 20% {
+                    color: rgba(255,255,255,0);
+                    text-shadow:
+                        .25em 0 0 rgba(255,255,255,0),
+                        .5em 0 0 rgba(255,255,255,0);
+                }
+                40% {
+                    color: white;
+                    text-shadow:
+                        .25em 0 0 rgba(255,255,255,0),
+                        .5em 0 0 rgba(255,255,255,0);
+                }
+                60% {
+                    text-shadow:
+                        .25em 0 0 white,
+                        .5em 0 0 rgba(255,255,255,0);
+                }
+                80%, 100% {
+                    text-shadow:
+                        .25em 0 0 white,
+                        .5em 0 0 white;
+                }
+            }
+            .dots::after {
+                content: '...';
+                animation: dots 1s steps(5, end) infinite;
+            }
         </style>
     </head>
 <body>
     <div class="container text-center">
         <img src="media/LogoWhiteNoBack.png" alt="Boncybee Logo" class="img-fluid logo">
         <p class="mt-3 Archive-Regular">BONCYBEE</p>
-        <p class="mt-3">Coming soon...</p>
+        <p class="mt-3">Coming soon<span class="dots"></span></p>
         <div class="social-icons mt-3">
             <a href="https://www.instagram.com/boncybee" target="_blank" title="Suivez Boncybee sur Instagram"><i class="fab fa-instagram mt-3"></i></a>
             <a href="https://open.spotify.com/intl-fr/artist/7ouLMx4Bw10e5zP0ocAOxF?si=Ks40_LgAR6-7eDinWf36Gw" target="_blank" title="Écoutez Boncybee sur Spotify"><i class="fab fa-spotify mt-3"></i></a>
