@@ -92,10 +92,25 @@
                         .25em 0 0 white,
                         .5em 0 0 white;
                 }
+                120%, 140% {
+                    text-shadow:
+                        .25em 0 0 rgba(255,255,255,0),
+                        .5em 0 0 white;
+                }
+                160%, 180% {
+                    text-shadow:
+                        .25em 0 0 rgba(255,255,255,0),
+                        .5em 0 0 rgba(255,255,255,0);
+                }
+                200%, 220% {
+                    text-shadow:
+                        .25em 0 0 rgba(255,255,255,0),
+                        .5em 0 0 rgba(255,255,255,0);
+                }
             }
             .dots::after {
                 content: '...';
-                animation: dots 1s steps(5, end) infinite;
+                animation: dots 3s steps(5, end) infinite;
             }
         </style>
     </head>
