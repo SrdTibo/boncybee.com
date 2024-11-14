@@ -1,119 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Boncybee: Artist and music creator. Explore the music journey and upcoming releases. Stay connected with Boncybee on social media.">
-        <meta name="author" content="Boncybee">
-        <meta name="keywords" content="Boncybee, music, artist, coming soon, Spotify, Deezer, Apple Music, social media">
-        <meta property="og:title" content="Boncybee - Music Artist">
-        <meta property="og:description" content="Explore Boncybee's music and upcoming releases. Stay connected on social media platforms.">
-        <meta property="og:image" content="media/LogoWhiteNoBack.png">
-        <meta property="og:type" content="website">
-        <title>Boncybee - Music Artist</title>
-        <link rel="icon" href="media/LogoWhiteNoBack.png" type="image/png">
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <style>
-            @font-face {
-                font-family: 'CustomFont';
-                src: url('fonts/OTF/Archive-Regular.otf') format('opentype'),
-                     url('fonts/TTF/Archive-Regular.ttf') format('truetype');
-            }
-            body {
-                background-color: black;
-                overflow: hidden;
-                height: 100vh;
-                margin: 0;
-                color: white;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-            }
-            .Archive-Regular {
-                font-family: 'CustomFont';
-                font-size: 8vh;
-            }
-            .container {
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-            .logo {
-                max-width: 50%;
-                alt="Boncybee Logo" /* Ajoutez un alt pour l'image */
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boncybee: Artist and music creator. Explore the music journey and upcoming releases. Stay connected with Boncybee on social media.">
+    <meta name="author" content="Boncybee">
+    <meta name="keywords" content="Boncybee, music, artist, coming soon, Spotify, Deezer, Apple Music, social media">
+    <meta property="og:title" content="Boncybee - Music Artist">
+    <meta property="og:description" content="Explore Boncybee's music and upcoming releases. Stay connected on social media platforms.">
+    <meta property="og:image" content="media/LogoWhiteNoBack.png">
+    <meta property="og:type" content="website">
+    <title>Boncybee - Music Artist</title>
+    <link rel="icon" href="media/LogoWhiteNoBack.png" type="image/png">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('fonts/OTF/Archive-Regular.otf') format('opentype'),
+                 url('fonts/TTF/Archive-Regular.ttf') format('truetype');
+        }
+        body {
+            background-color: black;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .Archive-Regular {
+            font-family: 'CustomFont';
+            font-size: 8vh;
+        }
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo {
+            max-width: 50%;
+            alt="Boncybee Logo"
+        }
+        .circle {
+            position: absolute;
+            border: solid 2px #ccc;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .social-icons i {
+            font-size: 2rem;
+            margin: 0 10px;
+            color: white;
+        }
+        .social-icons i:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s;
+        }
+        @media (max-width: 1280px) {
             .circle {
-                position: absolute;
-                border: solid 2px #ccc;
-                width: 65px;
-                height: 65px;
-                border-radius: 50%;
-                z-index: 0;
-                pointer-events: none;
+                display: none;
             }
-            .social-icons i {
-                font-size: 2rem;
-                margin: 0 10px;
+        }
+        @keyframes dots {
+            0%, 20% {
+                color: rgba(255,255,255,0);
+                text-shadow: .25em 0 0 rgba(255,255,255,0), .5em 0 0 rgba(255,255,255,0);
+            }
+            40% {
                 color: white;
+                text-shadow: .25em 0 0 rgba(255,255,255,0), .5em 0 0 rgba(255,255,255,0);
             }
-            .social-icons i:hover {
-                transform: scale(1.1);
-                transition: transform 0.3s;
+            60% {
+                text-shadow: .25em 0 0 white, .5em 0 0 rgba(255,255,255,0);
             }
-            @media (max-width: 1280px) {
-                .circle {
-                    display: none;
-                }
+            80% {
+                text-shadow: .25em 0 0 white, .5em 0 0 white;
             }
-            @keyframes dots {
-                0%, 20% {
-                    color: rgba(255,255,255,0);
-                    text-shadow:
-                        .25em 0 0 rgba(255,255,255,0),
-                        .5em 0 0 rgba(255,255,255,0);
-                }
-                40% {
-                    color: white;
-                    text-shadow:
-                        .25em 0 0 rgba(255,255,255,0),
-                        .5em 0 0 rgba(255,255,255,0);
-                }
-                60% {
-                    text-shadow:
-                        .25em 0 0 white,
-                        .5em 0 0 rgba(255,255,255,0);
-                }
-                80%, 100% {
-                    text-shadow:
-                        .25em 0 0 white,
-                        .5em 0 0 white;
-                }
-                120%, 140% {
-                    text-shadow:
-                        .25em 0 0 rgba(255,255,255,0),
-                        .5em 0 0 white;
-                }
-                160%, 180% {
-                    text-shadow:
-                        .25em 0 0 rgba(255,255,255,0),
-                        .5em 0 0 rgba(255,255,255,0);
-                }
-                200%, 220% {
-                    text-shadow:
-                        .25em 0 0 rgba(255,255,255,0),
-                        .5em 0 0 rgba(255,255,255,0);
-                }
+            100% {
+                text-shadow: .25em 0 0 white, .5em 0 0 white;
             }
-            .dots::after {
-                content: '.';
-                animation: dots 3s steps(5, end) infinite;
+            120% {
+                text-shadow: .25em 0 0 white, .5em 0 0 rgba(255,255,255,0);
             }
-        </style>
-    </head>
+            140% {
+                color: rgba(255,255,255,0);
+                text-shadow: .25em 0 0 rgba(255,255,255,0), .5em 0 0 rgba(255,255,255,0);
+            }
+        }
+        .dots::after {
+            content: '.';
+            animation: dots 3s steps(5, end) infinite;
+        }
+    </style>
+</head>
 <body>
     <div class="container text-center">
         <img src="media/LogoWhiteNoBack.png" alt="Boncybee Logo" class="img-fluid logo">
