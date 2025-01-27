@@ -11,7 +11,7 @@
     <meta property="og:image" content="media/LogoWhiteNoBack.png">
     <meta property="og:type" content="website">
     <title>Boncybee - Music Artist</title>
-    <link rel="icon" href="media/LogoWhiteNoBack.png" type="image/png">
+    <link rel="icon" href="media/LogoBlackWhiteBack.png" type="image/png">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
@@ -77,9 +77,21 @@
             margin: 0 10px;
             color: white;
         }
-        .social-icons i:hover {
-            transform: scale(1.1);
-            transition: transform 0.3s;
+        .image {
+            transition: filter 0.3s ease;
+        }
+
+        .image:hover {
+            filter: brightness(50%);
+        }
+
+        .imageInversé {
+            filter: brightness(50%);
+            transition: filter 0.3s ease;
+        }
+
+        .imageInversé:hover {
+            filter: brightness(100%);
         }
 
         .txt-button{
@@ -90,16 +102,44 @@
         .scroll-arrow {
             position: absolute;
             bottom: 70px;
-            transform: translateX(-50%);
+            transform: translateX(0%);
             font-size: 2rem;
             color: white;
             cursor: pointer;
             animation: bounce 1.5s infinite;
         }
 
+        .appear {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .appear.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        .fade-in-delay-1 {
+            animation-delay: 0.5s;
+        }
+
+        .fade-in-delay-2 {
+            animation-delay: 0.9s;
+        }
+
+        .fade-in-delay-3 {
+            animation-delay: 1.2s;
+        }
+
         @keyframes bounce {
             0%, 100% {
-                transform: translateY(0);
+                transform: translateY(-5px);
             }
             50% {
                 transform: translateY(-10px);
@@ -124,31 +164,56 @@
                 max-width: 30%; /* Adjust the cover image size */
             }
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="page firstPage">
         <div>
-            <img src="media/LogoWhiteNoBack.png" alt="Boncybee Logo" class="img-fluid logo">
-            <p class="mt-3 Archive-Regular">BONCYBEE</p>
-            <div class="social-icons mt-3">
-                <a href="https://www.instagram.com/boncybee" target="_blank" title="Suivez Boncybee sur Instagram"><i class="fab fa-instagram mt-3"></i></a>
-                <a href="https://open.spotify.com/intl-fr/artist/7ouLMx4Bw10e5zP0ocAOxF?si=Ks40_LgAR6-7eDinWf36Gw" target="_blank" title="Écoutez Boncybee sur Spotify"><i class="fab fa-spotify mt-3"></i></a>
-                <a href="https://music.apple.com/fr/artist/boncybee/1518042418" target="_blank" title="Écoutez Boncybee sur Apple Music"><i class="fab fa-apple mt-3"></i></a>
-                <a href="https://deezer.page.link/bA8MVFSUmNLnQWw76" target="_blank" title="Écoutez Boncybee sur Deezer"><i class="fab fa-deezer mt-3"></i></a>
+            <img src="media/LogoWhiteNoBack.png" alt="Boncybee Logo" class="img-fluid logo fade-in">
+            <p class="mt-3 Archive-Regular fade-in fade-in-delay-1">BONCYBEE</p>
+            <div class="social-icons mt-3 fade-in fade-in-delay-2">
+                <a href="https://www.instagram.com/boncybee" target="_blank" title="Suivez Boncybee sur Instagram"><i class="fab fa-instagram mt-3 image"></i></a>
+                <a href="https://open.spotify.com/intl-fr/artist/7ouLMx4Bw10e5zP0ocAOxF?si=Ks40_LgAR6-7eDinWf36Gw" target="_blank" title="Écoutez Boncybee sur Spotify"><i class="fab fa-spotify mt-3 image"></i></a>
+                <a href="https://music.apple.com/fr/artist/boncybee/1518042418" target="_blank" title="Écoutez Boncybee sur Apple Music"><i class="fab fa-apple mt-3 image"></i></a>
+                <a href="https://deezer.page.link/bA8MVFSUmNLnQWw76" target="_blank" title="Écoutez Boncybee sur Deezer"><i class="fab fa-deezer mt-3 image"></i></a>
             </div>
         </div>
         <!-- Scroll arrow to bottom -->
-        <div class="scroll-arrow" onclick="document.querySelector('.secondPage').scrollIntoView();">
-            <i class="fas fa-arrow-down"></i>
+        <div class="scroll-arrow fade-in fade-in-delay-3" onclick="document.querySelector('.secondPage').scrollIntoView();">
+            <i class="fas fa-arrow-down imageInversé"></i>
         </div>
     </div>
     <div class="page secondPage">
-        <img src="media/Background_GiveMe.jpg" alt="Boncybee Cover" class="background-cover">
-        <img src="media/Cover_Give_Me.jpg" alt="Boncybee Logo" class="img-fluid logo cover-image" style="z-index: 1;">
-        <div class="text-center mt-5" style="position: relative; z-index: 2;">
+        <img src="media/Background_GiveMe.jpg" alt="Boncybee Cover" class="background-cover appear">
+        <img src="media/Cover_Give_Me.jpg" alt="Boncybee Logo" class="img-fluid logo cover-image appear" style="z-index: 1;">
+        <div class="text-center mt-5 appear" style="position: relative; z-index: 2;">
             <a href="https://bfan.link/giveme" class="btn btn-light btn-lg Archive-Regular-little mt-4 txt-button" role="button">Explore More</a>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.appear').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
-</html>
