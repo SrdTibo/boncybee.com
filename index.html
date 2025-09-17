@@ -403,6 +403,21 @@
             }
         }
 
+        /* Home intro animations */
+        @keyframes fadeUp {
+            0% { transform: translateY(18px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .animate-home-logo {
+            animation: fadeUp 720ms cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        .animate-home-title {
+            animation: fadeUp 820ms cubic-bezier(.2,.8,.2,1) both;
+            animation-delay: 120ms;
+        }
+
         @keyframes leaveToLeft {
             0% {
                 transform: translateX(0);
@@ -650,6 +665,24 @@
                 requestAnimationFrame(updateIndicator);
             }
             showInitial(currentId);
+
+            // Trigger home intro animation when showing the initial page
+            function triggerHomeIntro() {
+                const logo = document.querySelector('.home-logo');
+                const title = document.querySelector('.home-title');
+                if (!logo || !title) return;
+                // Respect reduced motion
+                const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (prefersReduce) return;
+                // reset then add classes to retrigger if needed
+                logo.classList.remove('animate-home-logo');
+                title.classList.remove('animate-home-title');
+                requestAnimationFrame(() => {
+                    logo.classList.add('animate-home-logo');
+                    title.classList.add('animate-home-title');
+                });
+            }
+            if (currentId === 'home') triggerHomeIntro();
 
             function navigate(toId) {
                 if (isAnimating) return;
