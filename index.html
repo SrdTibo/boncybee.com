@@ -1,308 +1,741 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Boncybee: Artist and music creator. Explore the music journey and upcoming releases. Stay connected with Boncybee on social media.">
-    <meta name="author" content="Boncybee">
-    <meta name="keywords" content="Boncybee, music, artist, coming soon, Spotify, Deezer, Apple Music, social media, give me">
-    <meta property="og:title" content="Boncybee - Music Artist">
-    <meta property="og:description" content="Explore Boncybee's music and upcoming releases. Stay connected on social media platforms.">
-    <meta property="og:image" content="media/LogoWhiteNoBack.png">
-    <meta property="og:type" content="website">
-    <title>Boncybee - Music Artist</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Boncybee — Music Artist</title>
+    <meta name="description"
+        content="Boncybee: Artist and music creator. Explore the music journey and upcoming releases. Stay connected with Boncybee on social media." />
+    <meta name="author" content="Boncybee" />
+    <meta name="keywords" content="Boncybee, music, artist, coming soon, Spotify, Deezer, Apple Music, social media" />
+    <meta property="og:title" content="Boncybee - Music Artist" />
+    <meta property="og:description"
+        content="Explore Boncybee's music and upcoming releases. Stay connected on social media platforms." />
+    <meta property="og:image" content="media/Cover.jpeg" />
+    <meta property="og:type" content="website" />
     <link rel="icon" href="media/LogoBlackWhiteBack.png" type="image/png">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome for platform/social icons (like your v1) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <style>
+        /* Your display font from v1 */
         @font-face {
             font-family: 'CustomFont';
             src: url('fonts/OTF/Archive-Regular.otf') format('opentype'),
-                 url('fonts/TTF/Archive-Regular.ttf') format('truetype');
+                url('fonts/TTF/Archive-Regular.ttf') format('truetype');
+            font-display: swap;
         }
-        body, html {
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
+
+        :root {
+            --text: #f3f5f9;
+            --muted: #b9c0cf;
+            --nav-muted: rgba(248, 250, 255, .86);
+            --border: rgba(255, 255, 255, .14);
+            --shadow: rgba(0, 0, 0, .35);
+            /* softer base */
+            --nav-h: 64px;
+            --nav-offset: 14px;
+            /* navbar offset from top */
+            --anim: 520ms;
+            --radius: 22px;
+            --content-w: clamp(320px, 92vw, 1100px);
+            --glass-bg: rgba(255, 255, 255, .08);
+            --panel-dark: rgba(0, 0, 0, .38);
         }
-        .page {
-            height: 100vh;
-            width: 100%;
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+              min-height: 120vh;
+        }
+
+        body {
+              margin: 0;
+              background: url('media/Background.png') center center / cover no-repeat fixed;
+              background-color: rgba(0, 0, 0, 0.20);
+              background-blend-mode: multiply;
+              color: var(--text);
+              font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+              overflow: hidden;
+              text-rendering: optimizeLegibility;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ---------- LIQUID GLASS (softer shadows) ---------- */
+        .glass {
+            position: relative;
+            background: var(--glass-bg);
+            border: 1px solid var(--border);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            backdrop-filter: blur(16px) saturate(140%);
+            box-shadow: 0 6px 18px var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, .05);
+        }
+
+        .glass::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(70% 90% at 0% 0%, rgba(255, 255, 255, .26) 0%, rgba(255, 255, 255, 0) 55%),
+                linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, 0) 40%);
+            border-radius: inherit;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        .pressable {
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+
+        .pressable:hover {
+            transform: translateY(-1px);
+        }
+
+        .pressable:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 14px var(--shadow) inset;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        nav.site-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: var(--nav-offset);
+            height: var(--nav-h);
             display: flex;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-        .firstPage {
-            background-color: #212529;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .nav-inner {
+            position: relative;
+            display: flex;
+            gap: 6px;
+            padding: 8px;
+            border-radius: 999px;
+        }
+
+        /* Sliding indicator for active nav item */
+        .nav-indicator {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 40px;
+            width: 120px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .14);
+            border: 1px solid rgba(255, 255, 255, .22);
+            transition: transform .28s ease, width .28s ease, height .28s ease;
+            z-index: 0;
+        }
+
+        .site-link {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
+            min-width: 120px;
+            height: 40px;
+            padding: 0 16px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            color: var(--nav-muted);
+            /* texte clair par défaut */
+            text-decoration: none;
+            font-weight: 650;
+            letter-spacing: .18px;
+            transition: color .15s ease;
         }
-        .secondPage {
-            background-color: #222;
-            display: flex;
-            flex-direction: column;
+
+        .site-link:hover {
+            color: var(--text);
+        }
+
+        .site-link[aria-current="page"] {
+            color: var(--text);
+        }
+
+        /* ---------- PAGE WRAPPER ---------- */
+        main#app {
             position: relative;
+            height: calc(100vh - var(--nav-h) - var(--nav-offset));
+            margin-top: calc(var(--nav-h) + var(--nav-offset));
             overflow: hidden;
+            isolation: isolate;
         }
-        .thirdPage {
-            background-color: #85787a !important;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            text-align: left !important;
+
+        section.page {
+            position: absolute;
+            inset: 0;
+            padding: clamp(20px, 3.6vw, 40px);
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
         }
-        .Archive-Regular {
-            font-family: 'CustomFont';
-            font-size: 8vh;
+
+        section.page.active {
+            opacity: 1;
+            pointer-events: auto;
         }
-        .Archive-Regular-medium {
-            font-family: 'CustomFont';
-            font-size: 5vh;
+
+        section.page.entering {
+            z-index: 2;
         }
-        .Archive-Regular-little {
-            font-family: 'CustomFont';
-            font-size: 2vh;
-        }
-        .logo {
-            max-width: 40%;
+
+        section.page.leaving {
             z-index: 1;
         }
-        .cover-image {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+        /* ---------- HOME (remove card effect) ---------- */
+        .home-hero {
+            width: var(--content-w);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-align: center;
+            padding: 0;
+            /* no padding */
+            border: none;
+            background: none;
+            box-shadow: none;
+            /* no card look */
         }
-        .background-cover {
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        .home-logo {
+            width: clamp(180px, 36vw, 520px);
+            height: auto;
+            object-fit: contain;
+            display: block;
+            user-select: none;
+            -webkit-user-drag: none;
+            filter: none;
+        }
+
+        .home-title {
+            margin: 8px 0 0 0;
+            font-family: 'CustomFont', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            font-weight: 700;
+            line-height: 1;
+            font-size: clamp(22px, 7vw, 72px);
+            letter-spacing: .6px;
+        }
+
+        /* ---------- RELEASE ---------- */
+        .release-wrap {
+            width: var(--content-w);
+            display: grid;
+            grid-template-columns: 1fr;
+            justify-items: center;
+            gap: clamp(16px, 2.4vw, 26px);
+        }
+
+        .cover {
+            width: clamp(220px, 42vw, 440px);
+            aspect-ratio: 1 / 1;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 12px 28px var(--shadow);
+            background: var(--panel-dark);
+        }
+
+        .cover img {
             width: 100%;
             height: 100%;
-        }
-        .social-icons i {
-            font-size: 2rem;
-            margin: 0 10px;
-            color: white;
-        }
-        .image {
-            transition: filter 0.3s ease;
+            object-fit: cover;
+            display: block;
         }
 
-        .image:hover {
-            filter: brightness(50%);
-        }
-
-        .imageInversé {
-            filter: brightness(50%);
-            transition: filter 0.3s ease;
-        }
-
-        .imageInversé:hover {
-            filter: brightness(100%);
-        }
-
-        .txt-button{
-            color: #535864 !important;
-        }
-
-        /* Scroll to bottom arrow */
-        .scroll-arrow {
-            position: absolute;
-            bottom: 100px;
-            transform: translateX(0%);
-            font-size: 2rem;
-            color: white;
-            cursor: pointer;
-            animation: bounce 1.5s infinite;
-        }
-
-        .appear {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .appear.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 1s ease-in-out forwards;
-        }
-
-        .fade-in-delay-1 {
-            animation-delay: 0.5s;
-        }
-
-        .fade-in-delay-2 {
-            animation-delay: 0.9s;
-        }
-
-        .navbar-fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120px;
+        .platforms {
             display: flex;
+            flex-wrap: wrap;
+            gap: 16px 18px;
             align-items: center;
-            padding: 10px;
-            transition: transform 0.5s ease-in-out;
-            transform: translateY(-100%);
-            z-index: 1000;
+            justify-content: center;
+            padding: 10px 12px;
+            border-radius: 999px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 18px var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, .06);
         }
 
-        .small-logo {
-            height: 60px;
-            transition: opacity 0.5s ease-in-out;
-            opacity: 0;
+        .platforms a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 42px;
+            padding: 0 12px;
+            border-radius: 999px;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid transparent;
+            box-shadow: none;
         }
 
-        .navbar-visible {
-            transform: translateY(0);
+        .platforms a:hover {
+            background: rgba(255, 255, 255, .10);
         }
 
-        .navbar-visible .small-logo {
-            opacity: 1;
+        .platforms i {
+            font-size: 1.6rem;
+            line-height: 1;
+            filter: none;
         }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(-5px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        .discover {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 48px;
+            padding: 0 20px;
+            border-radius: 16px;
+            font-weight: 750;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            box-shadow: 0 8px 18px var(--shadow);
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .logo {
-                max-width: 60%; /* Adjust the logo size on smaller screens */
-            }
-            .cover-image {
-                max-width: 60%; /* Adjust the cover image size */
-            }
+        .discover:hover {
+            background: rgba(255, 255, 255, .12);
         }
 
-        @media (min-width: 769px) {
-            .logo {
-                max-width: 30%; /* Adjust logo size for larger screens */
-            }
-            .cover-image {
-                max-width: 30%; /* Adjust the cover image size */
-            }
+        /* ---------- BIOGRAPHY ---------- */
+        .bio-grid {
+            width: var(--content-w);
+            display: grid;
+            gap: 24px;
+            grid-template-columns: minmax(260px, 460px) 1fr;
+            align-items: stretch;
         }
 
-        @keyframes fadeIn {
-            from {
+        .bio-photo {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 24px var(--shadow);
+            background: var(--panel-dark);
+            min-height: 560px;
+        }
+
+        .bio-photo img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bio-text {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: clamp(16px, 2.6vw, 28px);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(0, 0, 0, .40), rgba(0, 0, 0, .28));
+            box-shadow: 0 10px 22px var(--shadow);
+            color:white;
+        }
+
+        .bio-text h2 {
+            margin: 0 0 6px 0;
+            font-family: 'CustomFont', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            font-size: clamp(22px, 3vw, 36px);
+            line-height: 1.2;
+        }
+
+        .bio-text p{
+            margin:0;
+            color:#fff; /* texte bien blanc */
+            font-size: clamp(14px, 1.2vw, 18px);
+            line-height:1.65;
+        }
+
+        /* ---------- SWIPE ANIMATIONS ---------- */
+        @keyframes enterFromLeft {
+            0% {
+                transform: translateX(-8%);
+                filter: blur(10px);
                 opacity: 0;
             }
-            to {
+
+            100% {
+                transform: translateX(0);
+                filter: blur(0);
                 opacity: 1;
             }
         }
+
+        @keyframes enterFromRight {
+            0% {
+                transform: translateX(8%);
+                filter: blur(10px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                filter: blur(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes leaveToLeft {
+            0% {
+                transform: translateX(0);
+                filter: blur(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(-8%);
+                filter: blur(8px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes leaveToRight {
+            0% {
+                transform: translateX(0);
+                filter: blur(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(8%);
+                filter: blur(8px);
+                opacity: 0;
+            }
+        }
+
+        .animate-enter-left {
+            animation: enterFromLeft var(--anim) cubic-bezier(.2, .6, .2, 1) both;
+        }
+
+        .animate-enter-right {
+            animation: enterFromRight var(--anim) cubic-bezier(.2, .6, .2, 1) both;
+        }
+
+        .animate-leave-left {
+            animation: leaveToLeft var(--anim) cubic-bezier(.4, .0, .2, 1) both;
+        }
+
+        .animate-leave-right {
+            animation: leaveToRight var(--anim) cubic-bezier(.4, .0, .2, 1) both;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        /* ≥ Tablet */
+        @media (max-width: 1024px){
+        :root{ --nav-h:62px; }
+        .site-link{ min-width:110px; }
+
+        /* Bio compacte vs desktop plein */
+        .bio-grid{ grid-template-columns: minmax(320px, 520px) 1fr; }
+        .bio-photo{ min-height: 420px; }
+        .bio-text p{ font-size: clamp(15px, 1.3vw, 19px); color:#fff; }
+        }
+
+        /* ≤ Tablet portrait */
+        @media (max-width: 860px){
+        .bio-grid{ 
+            grid-template-columns: 1fr;
+            margin-top: 64px; /* espace sous la navbar */
+        }
+        .bio-photo{ min-height: 240px; }      /* petite image sur petit écran */
+        .bio-text p{ font-size: 15px; color:#fff; }
+
+        /* Release un peu plus large que phone mais pas full */
+        .cover{ width: min(70vw, 520px); }
+        }
+
+        /* Mobile */
+        @media (max-width: 560px){
+        :root{ --nav-h:60px; --nav-offset:12px; }
+
+        .site-link{
+            min-width:96px;
+            height:38px;
+            padding:0 12px;
+            font-weight:600;
+        }
+
+        /* HOME : logo un poil moins gros, BONCYBEE plus grand */
+        .home-logo{  width: min(78vw, 420px); }
+        .home-title{ font-size: clamp(28px, 12vw, 86px); letter-spacing:.8px; }
+
+        /* RELEASE : cover généreuse sur mobile */
+        .cover{ width: min(92vw, 560px); }
+
+        /* BIO : descend encore plus sur mobile */
+        .bio-grid{ margin-top: 72px; }
+        .bio-photo{ min-height: 240px; }
+        .bio-text p{ font-size: 15px; color:#fff; }
+
+        .platforms a{ height:40px; padding:0 12px; }
+        .discover{ height:46px; border-radius:14px; }
+        }
+
+        /* Très petits écrans */
+        @media (max-width: 380px){
+        .home-logo{  width: min(82vw, 440px); }
+        .home-title{ font-size: clamp(30px, 13.5vw, 92px); }
+        .cover{      width: min(96vw, 600px); }
+
+        /* BIO : encore un peu plus bas si écran très étroit */
+        .bio-grid{ margin-top: 84px; }
+        .bio-photo{  min-height: 220px; }
+        .bio-text p{ font-size: 14px; color:#fff; }
+        }
+
+        /* Grands écrans : bio plus haute + TOUT le bloc bio plus bas + titres plus grands */
+        @media (min-width: 1280px){
+        .bio-grid{ margin-top: 48px; }                 /* ↓ ajouté : descendre le groupe (photo + texte) */
+        .bio-photo{ min-height: 680px; }
+        .bio-text p{ font-size: clamp(18px, 1.6vw, 24px); color:#fff; }
+        .bio-text h2{ font-size: clamp(26px, 3.2vw, 48px); }
+        }
+        @media (min-width: 1600px){
+        .bio-grid{ margin-top: 80px; }                 /* ↓ plus bas sur très grands écrans */
+        .bio-photo{ min-height: 760px; }
+        .bio-text p{ font-size: clamp(20px, 1.8vw, 26px); color:#fff; }
+        .bio-text h2{ font-size: clamp(30px, 3vw, 56px); }
+        }
+
+        /* Accessibilité */
+        @media (prefers-reduced-motion: reduce){
+        .animate-enter-left,
+        .animate-enter-right,
+        .animate-leave-left,
+        .animate-leave-right { animation: none !important; }
+        section.page{ transition:none !important; }
+        }
+
     </style>
 </head>
-<body>
-    <div class="page firstPage">
-        <div>
-            <img src="media/LogoWhiteNoBack.png" alt="Boncybee Logo" class="img-fluid logo fade-in">
-            <p class="mt-3 Archive-Regular fade-in fade-in-delay-1">BONCYBEE</p>
-        </div>
-        <!-- Scroll arrow to bottom -->
-        <div class="scroll-arrow " onclick="document.querySelector('.secondPage').scrollIntoView();">
-            <i class="fas fa-arrow-down imageInversé fade-in fade-in-delay-2"></i>
-        </div>
-    </div>
-    <div class="page secondPage">
-        <img src="media/Background.png" alt="Boncybee Cover" class="background-cover appear">
-        <img src="media/Cover.jpeg" alt="Boncybee Logo" class="img-fluid logo cover-image appear" style="z-index: 1;">
-        <div class="social-icons mt-3 appear">
-            <a href="https://www.youtube.com/@boncybee" target="_blank" title="Suivez Boncybee sur Instagram"><i class="fab fa-youtube mt-3 image"></i></a>
-            <a href="https://open.spotify.com/intl-fr/artist/7ouLMx4Bw10e5zP0ocAOxF?si=AZE9cDkyQJiJt4VTi435Nw" target="_blank" title="Écoutez Boncybee sur Spotify"><i class="fab fa-spotify mt-3 image"></i></a>
-            <a href="https://music.apple.com/fr/artist/boncybee/1518042418" target="_blank" title="Écoutez Boncybee sur Apple Music"><i class="fab fa-apple mt-3 image"></i></a>
-            <a href="https://dzr.page.link/YTttHFqxsSDvKzuG6" target="_blank" title="Écoutez Boncybee sur Deezer"><i class="fab fa-deezer mt-3 image"></i></a>
-        </div>
-        <div class="text-center mt-5 appear" style="position: relative; z-index: 2;">
-            <a href="https://bfan.link/Boncybee-cloud" class="btn btn-light btn-lg Archive-Regular-little mt-4 txt-button" role="button">Explore More</a>
-        </div>
-    </div>
 
-    <div class="page thirdPage">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <!-- Image -->
-                <div class="col-lg-6 text-center mb-4 mb-lg-0">
-                    <img src="media/IMG_5485.jpg" alt="Boncybee Logo" class="img-fluid logo cover-image appear" style="z-index: 1; max-width: 60vw; max-height: 80vh;">
+<body>
+    <!-- NAVBAR -->
+    <nav class="site-nav" aria-label="Navigation principale">
+        <div class="nav-inner glass" role="tablist" aria-label="Pages">
+            <div class="nav-indicator" aria-hidden="true"></div>
+            <a href="#home" class="site-link" role="tab" data-route="home" aria-selected="false">Home</a>
+            <a href="#latest" class="site-link" role="tab" data-route="latest" aria-selected="false">Release</a>
+            <a href="#bio" class="site-link" role="tab" data-route="bio" aria-selected="false">Biography</a>
+        </div>
+    </nav>
+
+    <!-- APP -->
+    <main id="app" tabindex="-1" aria-live="polite">
+        <!-- HOME -->
+        <section id="home" class="page active" aria-labelledby="home-title">
+            <div class="home-hero">
+                <img src="media/LogoWhiteNoBack.png" alt="Boncybee Logo" class="home-logo" />
+                <h1 id="home-title" class="home-title">BONCYBEE</h1>
+            </div>
+        </section>
+
+        <!-- RELEASE -->
+        <section id="latest" class="page" aria-labelledby="latest-title">
+            <div class="release-wrap">
+                <div class="cover" aria-labelledby="latest-title">
+                    <img src="media/Cover.jpeg" alt="Pochette de l’album" />
                 </div>
 
-                <!-- Texte -->
-                <div class="col-lg-6 text-white" style="max-width: 500px;">
-                    <h2 class="mb-3 Archive-Regular-medium">Biography</h2>
-                    <p style="font-size:medium;" >Boncybee is an electronic music artist whose bold and captivating style blends bass house, Majestic, and pop to deliver intense and immersive sonic experiences. Deeply influenced by pioneers of the scene such as Martin Garrix and Skrillex, Boncybee has, over the past five years, crafted a personal and distinctive universe that now draws the attention of an audience seeking novelty and emotional depth.</p></div>
+                <div class="platforms glass">
+                    <a href="https://www.youtube.com/@boncybee" target="_blank" title="YouTube" rel="noopener">
+                        <i class="fab fa-youtube"></i><span class="sr-only">YouTube</span>
+                    </a>
+                    <a href="https://open.spotify.com/intl-fr/artist/7ouLMx4Bw10e5zP0ocAOxF?si=AZE9cDkyQJiJt4VTi435Nw"
+                        target="_blank" title="Spotify" rel="noopener">
+                        <i class="fab fa-spotify"></i><span class="sr-only">Spotify</span>
+                    </a>
+                    <a href="https://music.apple.com/fr/artist/boncybee/1518042418" target="_blank" title="Apple Music"
+                        rel="noopener">
+                        <i class="fab fa-apple"></i><span class="sr-only">Apple Music</span>
+                    </a>
+                    <a href="https://dzr.page.link/YTttHFqxsSDvKzuG6" target="_blank" title="Deezer" rel="noopener">
+                        <i class="fab fa-deezer"></i><span class="sr-only">Deezer</span>
+                    </a>
+                </div>
+
+                <a class="discover" href="https://bfan.link/Boncybee-cloud" target="_blank" rel="noopener">Explore
+                    More</a>
             </div>
-        </div>
-    </div>
+            <h1 id="latest-title" class="sr-only" aria-hidden="true">Release</h1>
+        </section>
 
-
-
-    <footer>
-        <div class="text-center py-3" style="background-color: #212529;">
-            <a href="https://www.tiktok.com/@boncybee?is_from_webapp=1&sender_device=pc" target="_blank" title="Rejoignez mon tiktok">
-                <i class="fab fa-tiktok mb-3 image mr-3" style="font-size: 2rem; color: white;"></i>
-            </a>
-            <a href="https://www.instagram.com/boncybee?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" title="Rejoignez mon instagram">
-                <i class="fab fa-instagram mb-3 image mr-3" style="font-size: 2rem; color: white;"></i>
-            </a>
-            <a href="https://discord.gg/ngqXRbC5uE" target="_blank" title="Rejoignez mon discord">
-                <i class="fab fa-discord mb-3 image" style="font-size: 2rem; color: white;"></i>
-            </a>
-            <p class="Archive-Regular-little" style="color: #ffffff;" alt="artist picture">© 2025 Boncybee. All rights reserved.</p>
-        </div>
-    </footer>
+        <!-- BIOGRAPHY -->
+        <section id="bio" class="page" aria-labelledby="bio-title">
+            <div class="bio-grid ">
+                <div class="bio-photo">
+                    <img src="media/IMG_5485.jpg" alt="Photo de Boncybee" />
+                </div>
+                <article class="bio-text">
+                    <h2 id="bio-title">Biography</h2>
+                    <p>Boncybee is an electronic music artist whose bold and captivating style blends bass house,
+                        Majestic, and pop to deliver intense and immersive sonic experiences. Deeply influenced by
+                        pioneers of the scene such as Martin Garrix and Skrillex, Boncybee has, over the past five
+                        years, crafted a personal and distinctive universe that now draws the attention of an audience
+                        seeking novelty and emotional depth.</p>
+                </article>
+            </div>
+        </section>
+    </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
+        (function () {
+            const order = ["home", "latest", "bio"];
+            const pages = new Map(order.map(id => [id, document.getElementById(id)]));
+            const links = Array.from(document.querySelectorAll('.site-link'));
+            const navInner = document.querySelector('.nav-inner');
+            const indicator = document.querySelector('.nav-indicator');
+            const app = document.getElementById('app');
+
+            let currentId = order.includes(location.hash.slice(1)) ? location.hash.slice(1) : "home";
+            let isAnimating = false;
+
+            function setActiveLink(id) {
+                links.forEach(a => {
+                    const on = a.dataset.route === id;
+                    a.setAttribute('aria-selected', on ? 'true' : 'false');
+                    a.setAttribute('aria-current', on ? 'page' : 'false');
                 });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.appear').forEach(element => {
-                observer.observe(element);
-            });
-        });
-
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-        const navbar = document.querySelector(".navbar-fixed");
-        const firstPage = document.querySelector(".firstPage");
-
-        window.addEventListener("scroll", function () {
-            if (window.scrollY > firstPage.offsetHeight / 2) {
-                navbar.classList.add("navbar-visible");
-            } else {
-                navbar.classList.remove("navbar-visible");
+                updateIndicator();
             }
-        });
-    });
+
+            function updateIndicator() {
+                const active = document.querySelector('.site-link[aria-current="page"]') || document.querySelector(`.site-link[data-route="${currentId}"]`);
+                if (!active) return;
+                const left = active.offsetLeft;
+                const top = active.offsetTop;
+                const w = active.offsetWidth;
+                const h = active.offsetHeight;
+                indicator.style.width = w + 'px';
+                indicator.style.height = h + 'px';
+                indicator.style.transform = `translate(${left}px, ${top}px)`;
+            }
+
+            function showInitial(id) {
+                pages.forEach((sec, key) => {
+                    sec.classList.toggle('active', key === id);
+                    sec.classList.remove('entering', 'leaving', 'animate-enter-left', 'animate-enter-right', 'animate-leave-left', 'animate-leave-right');
+                });
+                setActiveLink(id);
+                if (location.hash.slice(1) !== id) location.hash = '#' + id;
+                // ensure indicator positioned on load
+                requestAnimationFrame(updateIndicator);
+            }
+            showInitial(currentId);
+
+            function navigate(toId) {
+                if (isAnimating) return;
+                if (!pages.has(toId) || toId === currentId) return;
+
+                const fromIdx = order.indexOf(currentId);
+                const toIdx = order.indexOf(toId);
+                const forward = toIdx > fromIdx;
+
+                const fromEl = pages.get(currentId);
+                const toEl = pages.get(toId);
+
+                isAnimating = true;
+
+                // Prepare
+                toEl.classList.add('entering', 'active');
+                fromEl.classList.add('leaving');
+
+                // Directions
+                const enterClass = forward ? 'animate-enter-right' : 'animate-enter-left';
+                const leaveClass = forward ? 'animate-leave-left' : 'animate-leave-right';
+
+                // Reflow to ensure animations trigger
+                void toEl.offsetWidth; void fromEl.offsetWidth;
+
+                toEl.classList.add(enterClass);
+                fromEl.classList.add(leaveClass);
+
+                let ended = 0;
+                const end = () => {
+                    ended++;
+                    if (ended < 2) return;
+                    fromEl.classList.remove('active', 'leaving', leaveClass);
+                    toEl.classList.remove('entering', enterClass);
+                    currentId = toId;
+                    setActiveLink(currentId);
+                    isAnimating = false;
+
+                    const focusable = toEl.querySelector('h1, h2, [tabindex="-1"]');
+                    if (focusable && focusable.focus) { focusable.focus({ preventScroll: true }); }
+                };
+                fromEl.addEventListener('animationend', end, { once: true });
+                toEl.addEventListener('animationend', end, { once: true });
+            }
+
+            // Hash-driven navigation (navbar/buttons/swipe)
+            window.addEventListener('hashchange', () => {
+                const to = location.hash.slice(1);
+                if (order.includes(to)) navigate(to);
+            });
+
+            // Keep indicator aligned on resize
+            window.addEventListener('resize', () => {
+                requestAnimationFrame(updateIndicator);
+            });
+
+            // Keyboard arrows -> set hash
+            window.addEventListener('keydown', (e) => {
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+                const idx = order.indexOf(currentId);
+                if (e.key === 'ArrowLeft' && idx > 0) location.hash = '#' + order[idx - 1];
+                if (e.key === 'ArrowRight' && idx < order.length - 1) location.hash = '#' + order[idx + 1];
+            });
+
+            // Touch swipe -> set hash
+            let startX = 0, startY = 0, tracking = false;
+            const THRESHOLD = 50;
+            app.addEventListener('touchstart', (e) => {
+                if (e.touches.length !== 1) return;
+                tracking = true;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            app.addEventListener('touchend', (e) => {
+                if (!tracking) return;
+                tracking = false;
+                const t = e.changedTouches[0];
+                const dx = t.clientX - startX;
+                const dy = t.clientY - startY;
+                if (Math.abs(dx) < THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+                const idx = order.indexOf(currentId);
+                if (dx < 0 && idx < order.length - 1) location.hash = '#' + order[idx + 1];
+                if (dx > 0 && idx > 0) location.hash = '#' + order[idx - 1];
+            }, { passive: true });
+        })();
     </script>
 </body>
 
-<div class="navbar-fixed">
-    <img src="media/LogoWhiteNoBack.png" alt="Boncybee Logo" class="small-logo">
-</div>
-
+</html>
