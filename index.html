@@ -16,11 +16,9 @@
     <meta property="og:type" content="website" />
     <link rel="icon" href="media/LogoBlackWhiteBack.png" type="image/png">
 
-    <!-- Font Awesome for platform/social icons (like your v1) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <style>
-        /* Your display font from v1 */
         @font-face {
             font-family: 'CustomFont';
             src: url('fonts/OTF/Archive-Regular.otf') format('opentype'),
@@ -34,10 +32,8 @@
             --nav-muted: rgba(248, 250, 255, .86);
             --border: rgba(255, 255, 255, .14);
             --shadow: rgba(0, 0, 0, .35);
-            /* softer base */
             --nav-h: 64px;
             --nav-offset: 14px;
-            /* navbar offset from top */
             --anim: 520ms;
             --radius: 22px;
             --content-w: clamp(320px, 92vw, 1100px);
@@ -67,7 +63,7 @@
               -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ---------- LIQUID GLASS (softer shadows) ---------- */
+        /* ---------- LIQUID GLASS ---------- */
         .glass {
             position: relative;
             background: var(--glass-bg);
@@ -124,7 +120,6 @@
             border-radius: 999px;
         }
 
-        /* Sliding indicator for active nav item */
         .nav-indicator {
             position: absolute;
             left: 0;
@@ -150,7 +145,6 @@
             border-radius: 999px;
             border: 1px solid transparent;
             color: var(--nav-muted);
-            /* texte clair par défaut */
             text-decoration: none;
             font-weight: 650;
             letter-spacing: .18px;
@@ -198,7 +192,7 @@
             z-index: 1;
         }
 
-        /* ---------- HOME (remove card effect) ---------- */
+        /* ---------- HOME ---------- */
         .home-hero {
             width: var(--content-w);
             display: flex;
@@ -208,11 +202,9 @@
             gap: 12px;
             text-align: center;
             padding: 0;
-            /* no padding */
             border: none;
             background: none;
             box-shadow: none;
-            /* no card look */
         }
 
         .home-logo {
@@ -369,7 +361,7 @@
 
         .bio-text p{
             margin:0;
-            color:#fff; /* texte bien blanc */
+            color:#fff;
             font-size: clamp(14px, 1.2vw, 18px);
             line-height:1.65;
         }
@@ -468,7 +460,6 @@
         :root{ --nav-h:62px; }
         .site-link{ min-width:110px; }
 
-        /* Bio compacte vs desktop plein */
         .bio-grid{ grid-template-columns: minmax(320px, 520px) 1fr; }
         .bio-photo{ min-height: 420px; }
         .bio-text p{ font-size: clamp(15px, 1.3vw, 19px); color:#fff; }
@@ -478,12 +469,10 @@
         @media (max-width: 860px){
         .bio-grid{ 
             grid-template-columns: 1fr;
-            margin-top: 64px; /* espace sous la navbar */
+            margin-top: 64px;
         }
-        .bio-photo{ min-height: 240px; }      /* petite image sur petit écran */
+        .bio-photo{ min-height: 240px; }
         .bio-text p{ font-size: 15px; color:#fff; }
-
-        /* Release un peu plus large que phone mais pas full */
         .cover{ width: min(70vw, 520px); }
         }
 
@@ -498,14 +487,14 @@
             font-weight:600;
         }
 
-        /* HOME : logo un poil moins gros, BONCYBEE plus grand */
+        /* HOME */
         .home-logo{  width: min(78vw, 420px); }
         .home-title{ font-size: clamp(28px, 12vw, 86px); letter-spacing:.8px; }
 
-        /* RELEASE : cover généreuse sur mobile */
+        /* RELEASE */
         .cover{ width: min(92vw, 560px); }
 
-        /* BIO : descend encore plus sur mobile */
+        /* BIO */
         .bio-grid{ margin-top: 72px; }
         .bio-photo{ min-height: 240px; }
         .bio-text p{ font-size: 15px; color:#fff; }
@@ -514,33 +503,30 @@
         .discover{ height:46px; border-radius:14px; }
         }
 
-        /* Très petits écrans */
         @media (max-width: 380px){
         .home-logo{  width: min(82vw, 440px); }
         .home-title{ font-size: clamp(30px, 13.5vw, 92px); }
         .cover{      width: min(96vw, 600px); }
 
-        /* BIO : encore un peu plus bas si écran très étroit */
+        /* BIO */
         .bio-grid{ margin-top: 84px; }
         .bio-photo{  min-height: 220px; }
         .bio-text p{ font-size: 14px; color:#fff; }
         }
 
-        /* Grands écrans : bio plus haute + TOUT le bloc bio plus bas + titres plus grands */
         @media (min-width: 1280px){
-        .bio-grid{ margin-top: 48px; }                 /* ↓ ajouté : descendre le groupe (photo + texte) */
+        .bio-grid{ margin-top: 48px; }
         .bio-photo{ min-height: 680px; }
         .bio-text p{ font-size: clamp(16px, 1.4vw, 24px); color:#fff; padding-left: 1.6vw; padding-right: 1.6vw;}
         .bio-text h2{ font-size: clamp(26px, 3.2vw, 48px); padding-left: 1.6vw; padding-right: 1.6vw;}
         }
         @media (min-width: 1600px){
-        .bio-grid{ margin-top: 80px; }                 /* ↓ plus bas sur très grands écrans */
+        .bio-grid{ margin-top: 80px; }
         .bio-photo{ min-height: 760px; }
         .bio-text p{ font-size: clamp(18px, 1.6vw, 24px); color:#fff; padding-left: 1.6vw; padding-right: 1.6vw;}
         .bio-text h2{ font-size: clamp(30px, 3vw, 56px); padding-left: 1.6vw; padding-right: 1.6vw;}
         }
 
-        /* Accessibilité */
         @media (prefers-reduced-motion: reduce){
         .animate-enter-left,
         .animate-enter-right,
@@ -661,20 +647,16 @@
                 });
                 setActiveLink(id);
                 if (location.hash.slice(1) !== id) location.hash = '#' + id;
-                // ensure indicator positioned on load
                 requestAnimationFrame(updateIndicator);
             }
             showInitial(currentId);
 
-            // Trigger home intro animation when showing the initial page
             function triggerHomeIntro() {
                 const logo = document.querySelector('.home-logo');
                 const title = document.querySelector('.home-title');
                 if (!logo || !title) return;
-                // Respect reduced motion
                 const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 if (prefersReduce) return;
-                // reset then add classes to retrigger if needed
                 logo.classList.remove('animate-home-logo');
                 title.classList.remove('animate-home-title');
                 requestAnimationFrame(() => {
@@ -697,15 +679,12 @@
 
                 isAnimating = true;
 
-                // Prepare
                 toEl.classList.add('entering', 'active');
                 fromEl.classList.add('leaving');
 
-                // Directions
                 const enterClass = forward ? 'animate-enter-right' : 'animate-enter-left';
                 const leaveClass = forward ? 'animate-leave-left' : 'animate-leave-right';
 
-                // Reflow to ensure animations trigger
                 void toEl.offsetWidth; void fromEl.offsetWidth;
 
                 toEl.classList.add(enterClass);
@@ -728,18 +707,15 @@
                 toEl.addEventListener('animationend', end, { once: true });
             }
 
-            // Hash-driven navigation (navbar/buttons/swipe)
             window.addEventListener('hashchange', () => {
                 const to = location.hash.slice(1);
                 if (order.includes(to)) navigate(to);
             });
 
-            // Keep indicator aligned on resize
             window.addEventListener('resize', () => {
                 requestAnimationFrame(updateIndicator);
             });
 
-            // Keyboard arrows -> set hash
             window.addEventListener('keydown', (e) => {
                 if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
                 const idx = order.indexOf(currentId);
@@ -747,7 +723,6 @@
                 if (e.key === 'ArrowRight' && idx < order.length - 1) location.hash = '#' + order[idx + 1];
             });
 
-            // Touch swipe -> set hash
             let startX = 0, startY = 0, tracking = false;
             const THRESHOLD = 50;
             app.addEventListener('touchstart', (e) => {
