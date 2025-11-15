@@ -25,9 +25,10 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: "/boncybee.com"
-      - run: touch out/.nojekyll
+      - run: |
+          mkdir -p out
+          touch out/.nojekyll
+          echo "boncybee.com" > out/CNAME
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
