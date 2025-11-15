@@ -26,8 +26,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: "/REPO_NAME"
-      - run: npm run export
+          NEXT_PUBLIC_BASE_PATH: "/boncybee.com"
       - run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
