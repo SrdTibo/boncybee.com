@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "Boncybee — Music",
     description:
       "Discover CLOUD and other tracks by Boncybee. Bold, emotional and immersive electronic music.",
-    images: [{ url: "/Cover.jpeg", width: 1200, height: 630, alt: "Boncybee - Cloud single cover" }],
+    images: [{ url: "/cover.webp", width: 1200, height: 630, alt: "Boncybee - Cloud single cover" }],
   },
 };
 

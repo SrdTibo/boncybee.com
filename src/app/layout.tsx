@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "Boncybee",
     images: [
       {
-        url: "/Cover.jpeg",
+        url: "/cover.webp",
         width: 1200,
         height: 630,
         alt: "Boncybee - Cloud single cover",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/LogoBlackWhiteBack.png",
+    icon: "/logo.webp",
   },
 };
 

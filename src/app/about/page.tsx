@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "Boncybee — About",
     description:
       "Discover who Boncybee is, his inspirations, and the artistic vision behind his immersive electronic productions.",
-    images: [{ url: "/portrait.PNG", width: 800, height: 1000, alt: "Boncybee portrait" }],
+    images: [{ url: "/portrait.webp", width: 800, height: 1000, alt: "Boncybee portrait" }],
   },
 };
 

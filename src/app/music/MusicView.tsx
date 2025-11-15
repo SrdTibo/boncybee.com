@@ -7,14 +7,14 @@ export function MusicView() {
   return (
     <div className="relative flex h-screen w-screen items-center justify-center bg-black text-white">
       <div className="pointer-events-none absolute inset-0">
-        <Image src="/SetTop.JPG" alt="Boncybee live show" fill priority className="object-cover opacity-70" />
+        <Image src="/set-top.webp" alt="Boncybee live show" fill priority className="object-cover opacity-70" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
       </div>
       <Navbar />
       <main className="relative z-10 flex max-w-5xl flex-col items-center justify-center px-4 text-center md:flex-row md:items-center md:justify-between md:gap-16">
         <div className="mb-8 flex justify-center md:mb-0 md:w-1/2">
           <div className="mx-auto w-full max-w-[230px] overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur md:max-w-xs">
-            <Image src="/Cover.jpeg" alt="Cloud - Boncybee cover" width={300} height={300} className="h-auto w-full rounded-2xl object-cover" />
+            <Image src="/cover.webp" alt="Cloud - Boncybee cover" width={300} height={300} className="h-auto w-full rounded-2xl object-cover" />
           </div>
         </div>
         <section className="flex flex-col items-center gap-4 md:items-start md:w-1/2">
