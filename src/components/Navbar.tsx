@@ -1,104 +1,120 @@
 "use client";
 
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Img } from "@/components/Img";
+import { TransitionLink } from "@/components/RouteTransitions";
+import { nav, site } from "@/lib/site";
+
+const isActive = (pathname: string, href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [lastPath, setLastPath] = useState(pathname);
+
+  // Close the menu whenever the route changes.
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setOpen(false);
+  }
 
   useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
     <>
-      <motion.header
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-        className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-6 py-5 md:px-10"
+      <header
+        className="reveal fixed inset-x-0 top-0 z-60 mix-blend-difference"
+        style={{ "--d": "200ms" } as React.CSSProperties}
       >
-        <Link href="/" className="flex items-center gap-3">
-          <span className="font-archive text-[11px] uppercase tracking-[0.35em] text-zinc-400">
-            F07H053WH0B31I3V3DF1R57.
-          </span>
-        </Link>
+        <div className="flex items-center justify-between px-5 py-5 md:px-10 md:py-7">
+          <TransitionLink href="/" className="group" aria-label="Boncybee — home">
+            <Img
+              name="logo"
+              alt=""
+              sizes="48px"
+              className="h-auto w-9 transition-transform duration-700 ease-out-expo group-hover:scale-110 md:w-10"
+            />
+          </TransitionLink>
 
-        <nav className="hidden gap-7 text-xs uppercase tracking-[0.25em] text-zinc-400 md:flex">
-          <Link href="/music" className="transition-colors hover:text-white">
-            Music
-          </Link>
-          <Link href="/about" className="transition-colors hover:text-white">
-            About
-          </Link>
-        </nav>
+          <nav aria-label="Main" className="hidden items-center gap-10 md:flex">
+            {nav.map(({ href, label }) => {
+              const active = isActive(pathname, href);
+              return (
+                <TransitionLink
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`text-xs uppercase tracking-[0.3em] transition-opacity duration-300 ${
+                    active ? "line-through decoration-1" : "opacity-50 hover:opacity-100"
+                  }`}
+                >
+                  {label}
+                </TransitionLink>
+              );
+            })}
+            <a href={site.links} target="_blank" rel="noopener noreferrer" className="link">
+              Listen <span className="arrow" aria-hidden>↗</span>
+            </a>
+          </nav>
 
-        <button
-          onClick={() => setOpen(true)}
-          className="md:hidden text-xs uppercase tracking-[0.25em] text-zinc-300"
-        >
-          Menu
-        </button>
-      </motion.header>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed inset-0 z-40 flex h-screen w-screen flex-col bg-black"
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className="relative z-10 flex h-10 items-center gap-3 text-xs uppercase tracking-[0.3em] md:hidden"
           >
-            <div className="flex items-center justify-between px-6 py-5">
-              <span className="font-archive text-[11px] uppercase tracking-[0.35em] text-zinc-400">
-                F07H053WH0B31I3V3DF1R57.
-              </span>
-              <button
-                onClick={() => setOpen(false)}
-                className="text-xs uppercase tracking-[0.25em] text-zinc-300"
-              >
-                Close
-              </button>
-            </div>
+            {open ? "Close" : "Menu"}
+            <span className="relative block h-2.5 w-5" aria-hidden>
+              <span className={`absolute left-0 h-px w-full bg-current transition-transform duration-500 ease-out-expo ${open ? "top-1/2 rotate-45" : "top-0"}`} />
+              <span className={`absolute left-0 h-px w-full bg-current transition-transform duration-500 ease-out-expo ${open ? "top-1/2 -rotate-45" : "bottom-0"}`} />
+            </span>
+          </button>
+        </div>
+      </header>
 
-            <motion.nav
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex flex-1 flex-col items-center justify-center gap-8 text-center"
-            >
-              <Link
-                href="/"
-                className="text-2xl uppercase tracking-[0.3em] text-zinc-100"
+      <div
+        id="mobile-menu"
+        inert={!open}
+        className={`fixed inset-0 z-55 flex flex-col justify-between bg-ink px-5 pb-10 pt-28 transition-[clip-path] duration-700 ease-in-out-quart md:hidden ${
+          open ? "[clip-path:inset(0_0_0_0)]" : "[clip-path:inset(0_0_100%_0)]"
+        }`}
+      >
+        <nav aria-label="Mobile" className="flex flex-col">
+          {nav.map(({ href, label }, i) => (
+            <span key={href} className="line">
+              <TransitionLink
+                href={href}
                 onClick={() => setOpen(false)}
+                aria-current={isActive(pathname, href) ? "page" : undefined}
+                className={`block font-display text-6xl uppercase leading-[1.05] transition-[transform,opacity] duration-700 ease-out-expo aria-[current=page]:text-outline ${
+                  open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
+                }`}
+                style={{ transitionDelay: open ? `${150 + i * 80}ms` : "0ms" }}
               >
-                Home
-              </Link>
-
-              <Link
-                href="/music"
-                className="text-2xl uppercase tracking-[0.3em] text-zinc-100"
-                onClick={() => setOpen(false)}
-              >
-                Music
-              </Link>
-
-              <Link
-                href="/about"
-                className="text-2xl uppercase tracking-[0.3em] text-zinc-100"
-                onClick={() => setOpen(false)}
-              >
-                About
-              </Link>
-            </motion.nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {label}
+              </TransitionLink>
+            </span>
+          ))}
+        </nav>
+        <div className={`flex items-end justify-between transition-opacity duration-700 ${open ? "opacity-100 delay-500" : "opacity-0"}`}>
+          <a href={site.links} target="_blank" rel="noopener noreferrer" className="link">
+            Listen <span className="arrow" aria-hidden>↗</span>
+          </a>
+          <span className="font-display text-[9px] uppercase tracking-[0.3em] opacity-40">{site.tagline}</span>
+        </div>
+      </div>
     </>
   );
 }
